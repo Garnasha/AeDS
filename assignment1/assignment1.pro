@@ -5,7 +5,9 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    matrix.cpp
+	matrix.cpp \
+    wormholeCalc.cpp
+
 
 include(deployment.pri)
 qtcAddDeployment()
