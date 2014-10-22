@@ -1,25 +1,46 @@
 #include <cstdlib>
 #include <vector>
 #include <matrix.h>
+#include <matrix.cpp>
 
 using namespace std;
 
-vector<unsigned int>& paths(unsigned int i, unsigned int j, Matrix<unsigned int>& input)
+bool pathExists(unsigned int i, unsigned int j, Matrix<unsigned int>& input, vector< vector<unsigned int> >& wormholes)
 {
-    vector<unsigned int> values;
-    return values;
-}
-
-unsigned int minimum(vector<unsigned int>& values)
-{
-    return 0;
+    if(wormholes.size() <= 1)
+        return false;
+    vector< vector<unsigned int> > dummy;
+    for(vector<unsigned int> wormhole : wormholes)
+        dummy.push_back(wormhole);
+    unsigned int length = 0;
+    for(vector<unsigned int> wormhole : dummy){
+        if(wormhole[0] == j){
+            j = wormhole[1];
+            length += wormhole[2];
+        }
+        if(wormhole[1] == j){
+            j = wormhole[0];
+            length += wormhole[2];
+        }
+        if(wormhole[0] == i){
+            i = wormhole[1];
+            length += wormhole[2];
+        }
+        if(wormhole[1] == i){
+            i = wormhole[0];
+            length += wormhole[2];
+        }
+        if(j == i && length == input[i][j])
+            return true;
+    }
+    return false;
 }
 
 void calcWormholes(Matrix<unsigned int>& input, vector< vector<unsigned int> >& tupleList)
 {
     vector< vector<unsigned int> > wormholes;
     for(vector<unsigned int> tuple : tupleList){
-        if(input[tuple[0]][tuple[1]] <= minimum(paths(tuple[0], tuple[1], input)))
+        if(!pathExists(tuple[0], tuple[1], input, wormholes))
         {
             vector<unsigned int> wormhole;
             wormhole.push_back(tuple[0]);
