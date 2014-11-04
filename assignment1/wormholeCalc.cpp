@@ -5,42 +5,36 @@
 
 using namespace std;
 
-bool pathExists(unsigned int i, unsigned int j, Matrix<unsigned int>& input, vector< vector<unsigned int> >& wormholes)
+bool pathExists(unsigned int i, unsigned int j, unsigned int target, vector< vector<unsigned int> >& wormholes, unsigned int length)
 {
-    if(wormholes.size() <= 1)
+    if(length > target)
         return false;
-    vector< vector<unsigned int> > dummy;
-    for(vector<unsigned int> wormhole : wormholes)
-        dummy.push_back(wormhole);
-    unsigned int length = 0;
-    for(vector<unsigned int> wormhole : dummy){
-        if(wormhole[0] == j){
-            j = wormhole[1];
-            length += wormhole[2];
-        }
-        if(wormhole[1] == j){
-            j = wormhole[0];
-            length += wormhole[2];
-        }
-        if(wormhole[0] == i){
-            i = wormhole[1];
-            length += wormhole[2];
-        }
-        if(wormhole[1] == i){
-            i = wormhole[0];
-            length += wormhole[2];
-        }
-        if(j == i && length == input[i][j])
-            return true;
-    }
-    return false;
+    if(length == target && i == j)
+        return true;
+    if(wormholes.size() == 0)
+        return false;
+    bool exists1, exists2;
+    vector<unsigned int> wormhole = wormholes.back();
+    wormholes.pop_back();
+    if(i == wormhole[0])
+        exists1 = pathExists(wormhole[0], j, target, wormholes, length + wormhole[2]);
+    if(i == wormhole[1])
+        exists1 = pathExists(wormhole[1], j, target, wormholes, length + wormhole[2]);
+    if(j == wormhole[0])
+        exists1 = pathExists(i, wormhole[0], target, wormholes, length + wormhole[2]);
+    if(j == wormhole[1])
+        exists1 = pathExists(i, wormhole[1], target, wormholes, length + wormhole[2]);
+
+    exists2 = pathExists(i, j, target, wormholes, length);
+    wormholes.push_back(wormhole);
+    return (exists1 || exists2);
 }
 
 void calcWormholes(Matrix<unsigned int>& input, vector< vector<unsigned int> >& tupleList)
 {
     vector< vector<unsigned int> > wormholes;
     for(vector<unsigned int> tuple : tupleList){
-        if(!pathExists(tuple[0], tuple[1], input, wormholes))
+        if(!pathExists(tuple[0], tuple[1], input[tuple[0]][tuple[1]], wormholes, 0))
         {
             vector<unsigned int> wormhole;
             wormhole.push_back(tuple[0]);
