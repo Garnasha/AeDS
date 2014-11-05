@@ -10,17 +10,7 @@ class Matrix
 private:
 	std::vector<std::vector<T>> store;
 public:
-	class row_type{
-	private:
-		typename std::vector<T>::iterator row_begin;
-		typename std::vector<T>::size_type row_size;
-	public:
-		typedef decltype(row_size) size_type;
-		typename std::vector<T>::iterator begin();
-		typename std::vector<T>::iterator end();
-		T &operator[](size_type);
-	};
-
+	typedef typename std::vector<T> row_type;
 	typedef typename std::vector<row_type>::size_type size_type;
 	typedef typename row_type::size_type  row_size_type;
 	Matrix(size_type, row_size_type);
