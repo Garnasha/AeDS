@@ -1,46 +1,52 @@
 #include <cstdlib>
 #include <vector>
-#include <matrix.h>
-#include <matrix.cpp>
+#include <cassert>
 
 using namespace std;
 
-bool pathExists(unsigned int i, unsigned int j, unsigned int target, vector< vector<unsigned int> >& wormholes, unsigned int length)
-{
-    if(length > target)
-        return false;
-    if(length == target && i == j)
-        return true;
-    if(wormholes.size() == 0)
-        return false;
-    bool exists1, exists2;
-    vector<unsigned int> wormhole = wormholes.back();
-    wormholes.pop_back();
-    if(i == wormhole[0])
-        exists1 = pathExists(wormhole[0], j, target, wormholes, length + wormhole[2]);
-    if(i == wormhole[1])
-        exists1 = pathExists(wormhole[1], j, target, wormholes, length + wormhole[2]);
-    if(j == wormhole[0])
-        exists1 = pathExists(i, wormhole[0], target, wormholes, length + wormhole[2]);
-    if(j == wormhole[1])
-        exists1 = pathExists(i, wormhole[1], target, wormholes, length + wormhole[2]);
+typedef vector< vector<unsigned int> > matrix;
 
-    exists2 = pathExists(i, j, target, wormholes, length);
-    wormholes.push_back(wormhole);
-    return (exists1 || exists2);
+void deduce(matrix& deducted, matrix& input, unsigned int tuple[], vector< vector<unsigned int> >& wormholes)
+{
+    assert(deducted.size() == input.size() && deducted[0].size() == input[0].size());
+    
+    if(deducted[tuple[0]][tuple[1]] != input[tuple[0]][tuple[1]]){
+        deducted[tuple[0]][tuple[1]] = input[tuple[0]][tuple[1]];
+        deducted[tuple[1]][tuple[0]] = input[tuple[0]][tuple[1]];
+        for(int i = 0; i < deducted[tuple[0]].size(); i++){
+            if(deducted[tuple[0]][i] > 0 && deducted[tuple[1]][i] == 0){
+                deducted[tuple[1]][i] = deducted[tuple[0]][i] + deducted[tuple[0]][tuple[1]];
+                deducted[i][tuple[1]] = deducted[tuple[1]][i];
+            }
+        }
+        for(int i = 0; i < deducted[tuple[1]].size(); i++){
+            if(deducted[tuple[1]][i] > 0 && deducted[tuple[0]][i] == 0){
+                deducted[tuple[0]][i] = deducted[tuple[1]][i] + deducted[tuple[0]][tuple[1]];
+                deducted[i][tuple[0]] = deducted[tuple[0]][i];
+            }
+        }
+        vector<unsigned int> wormhole;
+        wormhole.push_back(tuple[0]);
+        wormhole.push_back(tuple[1]);
+        wormhole.push_back(input[tuple[0]][tuple[1]]);
+        wormholes.push_back(wormhole);
+    }
 }
 
-void calcWormholes(Matrix<unsigned int>& input, vector< vector<unsigned int> >& tupleList)
+vector< vector<unsigned int> > calcWormholes(matrix& input, vector< unsigned int [2] >& tupleList)
 {
-    vector< vector<unsigned int> > wormholes;
-    for(vector<unsigned int> tuple : tupleList){
-        if(!pathExists(tuple[0], tuple[1], input[tuple[0]][tuple[1]], wormholes, 0))
-        {
-            vector<unsigned int> wormhole;
-            wormhole.push_back(tuple[0]);
-            wormhole.push_back(tuple[1]);
-            wormhole.push_back(input[tuple[0]][tuple[1]]);
-            wormholes.push_back(wormhole);
+    matrix deducted;
+    for(int i = 0; i < input.size(); i++){
+        vector<unsigned int> v;
+        deducted.push_back(v);
+        for(int j = 0; j < input[i].size(); j++){
+            deducted[i].push_back(0);
         }
     }
+    vector< vector<unsigned int> > wormholes;
+    for(int i = 0; i < tupleList.size(); i++){
+        unsigned int tuple[2] = {tupleList[i][0], tupleList[i][1]};
+        deduce(deducted, input, tuple, wormholes);
+    }
+    return wormholes;
 }
