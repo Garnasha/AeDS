@@ -6,12 +6,14 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
 	matrix.cpp \
-    wormholeCalc.cpp
+    wormholeCalc.cpp \
+    indirectionSort.cpp
 
 
 include(deployment.pri)
 qtcAddDeployment()
 
 HEADERS += \
-    matrix.h
+    matrix.h \
+    indirectionSort.h
 
