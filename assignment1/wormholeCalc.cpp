@@ -6,6 +6,11 @@ using namespace std;
 
 typedef vector< vector<unsigned int> > matrix;
 
+template<T>
+T &get_by_coords(vector<vector<T>> &m,vector<unsigned int> tuple){
+	return m[tuple[0]][tuple[1]];
+}
+
 void deduce(matrix& deducted, matrix& input, vector<unsigned int> tuple, vector< vector<unsigned int> >& wormholes)
 {
     assert(deducted.size() == input.size() && deducted[0].size() == input[0].size());
@@ -26,8 +31,8 @@ void deduce(matrix& deducted, matrix& input, vector<unsigned int> tuple, vector<
             }
         }
         vector<unsigned int> wormhole;
-        wormhole.push_back(tuple[0]);
-        wormhole.push_back(tuple[1]);
+		wormhole.push_back(tuple[0]);
+		wormhole.push_back(tuple[1]);
         wormhole.push_back(input[tuple[0]][tuple[1]]);
         wormholes.push_back(wormhole);
     }

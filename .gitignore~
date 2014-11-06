@@ -77,5 +77,3 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
-# Binaries (custom ignore by Sal Wolffs)
-*.exe
