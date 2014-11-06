@@ -6,7 +6,7 @@ using namespace std;
 
 typedef vector< vector<unsigned int> > matrix;
 
-void deduce(matrix& deducted, matrix& input, unsigned int tuple[], vector< vector<unsigned int> >& wormholes)
+void deduce(matrix& deducted, matrix& input, vector<unsigned int> tuple, vector< vector<unsigned int> >& wormholes)
 {
     assert(deducted.size() == input.size() && deducted[0].size() == input[0].size());
     
@@ -33,7 +33,7 @@ void deduce(matrix& deducted, matrix& input, unsigned int tuple[], vector< vecto
     }
 }
 
-vector< vector<unsigned int> > calcWormholes(matrix& input, vector< unsigned int [2] >& tupleList)
+vector< vector<unsigned int> > calcWormholes(matrix& input, vector< vector<unsigned int> >& tupleList)
 {
     matrix deducted;
     for(int i = 0; i < input.size(); i++){
@@ -44,8 +44,7 @@ vector< vector<unsigned int> > calcWormholes(matrix& input, vector< unsigned int
         }
     }
     vector< vector<unsigned int> > wormholes;
-    for(int i = 0; i < tupleList.size(); i++){
-        unsigned int tuple[2] = {tupleList[i][0], tupleList[i][1]};
+    for(vector<unsigned int> tuple: tupleList){
         deduce(deducted, input, tuple, wormholes);
     }
     return wormholes;
