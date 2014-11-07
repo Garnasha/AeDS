@@ -81,3 +81,5 @@ $RECYCLE.BIN/
 *.exe
 
 *.exe
+*.swp
+*.exe
