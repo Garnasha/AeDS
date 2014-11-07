@@ -5,12 +5,12 @@
 
 using namespace std;
 
-typedef signed int distance;
+typedef signed int Distance;
 typedef unsigned int index;
-typedef vector<vector<distance>> matrix;
-typedef tuple<index, index, distance> wormhole;
+typedef vector<vector<Distance>> matrix;
+typedef tuple<index, index, Distance> wormhole;
 
-void addWormhole(vector<wormhole>& wormholes, index x, index y, distance length)
+void addWormhole(vector<wormhole>& wormholes, index x, index y, Distance length)
 {
     wormhole next = make_tuple(x, y, length);
     wormholes.push_back(next);
@@ -26,7 +26,7 @@ void deduceDistances(matrix& input, matrix& deduced, index x, index y)
 
 }
 
-index indexForShortest(vector<distance> row, index rowNr)
+index indexForShortest(vector<Distance> row, index rowNr)
 {
     index min = 0;
     for(index j = rowNr + 1; j < row.size(); j++){
