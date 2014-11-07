@@ -4,7 +4,8 @@
 
 using namespace std;
 
-typedef vector< vector<int> > matrix;
+typedef vector< vector<signed int> > matrix;
+typedef tuple<unsigned int, unsigned int, signed int> wormhole;
 
 void addWormhole(vector<tuple>& wormholes, unsigned int x, unsigned int y, int length)
 {
