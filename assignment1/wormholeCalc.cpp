@@ -21,12 +21,23 @@ void addLastWormhole(matrix& input, matrix& deduced)
 
 }
 
-void deduceDistances(matrix& input, matrix& deduced, index x, index y)
+void deduceDistances(matrix& deduced, index x, index y)
 {
-
+    for(index i = 0; i < deduced[x].size(); i++){
+        if(deduced[x][i] != INT_MAX && deduced[y][i] > deduced[x][y] + deduced[x][i]){
+            deduced[y][i] = deduced[x][y] + deduced[x][i];
+            deduced[i][y] = deduced[y][i];
+        }
+    }
+    for(index i = 0; i < deduced[y].size(); i++){
+        if(deduced[y][i] != INT_MAX && deduced[x][i] > deduced[x][y] + deduced[y][i]){
+            deduced[x][i] = deduced[x][y] + deduced[y][i];
+            deduced[i][x] = deduced[x][i];
+        }
+    }
 }
 
-index indexForShortest(vector<Distance> row, index rowNr)
+index indexForShortest(vector<Distance>& row, index rowNr)
 {
     index min = 0;
     for(index j = rowNr + 1; j < row.size(); j++){
@@ -55,7 +66,8 @@ void calcWormholes(matrix& input)
         index j = indexForShortest(input[i], i);
         addWormhole(wormholes, i, j, input[i][j]);
         deduced[i][j] = input[i][j];
-        deduceDistances(input, deduced, i, j);
+        deduced[j][i] = input[i][j];
+        deduceDistances(deduced, i, j);
     }
     addLastWormhole(input, deduced);
 }
