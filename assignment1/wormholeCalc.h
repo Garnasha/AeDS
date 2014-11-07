@@ -18,11 +18,11 @@ void addLastWormhole(matrix& input, matrix& deduced);
 
 void deduceDistances(matrix& input, matrix& deduced, index x, index y);
 
-index indexForShortest(std::vector<distance> row, index rowNr);
+index indexForShortest(std::vector<distance> &row, index rowNr);
 
 void fillMatrix(matrix& m, size_t size);
 
-vector<wormhole> calcWormholes(matrix& input);
+std::vector<wormhole> calcWormholes(matrix& input);
 
 
 #endif // WORMHOLECALC_H
