@@ -42,11 +42,11 @@ void deduceDistances(matrix& deduced, index x, index y)
     }
 }
 
-index indexForShortest(vector<distance> const &row, index rowNr)
+index indexForShortest(matrix& deduced, vector<distance> const &row, index rowNr)
 {
-	index min = rowNr + 1;
-	for(index j = min; j < row.size(); j++){
-        if(row[min] > row[j])
+    index min = rowNr;
+    for(index j = 0; j < row.size(); j++){
+        if(((row[min] > row[j] && j != rowNr) || min == rowNr) && deduced[rowNr][j] == unreachable)
             min = j;
     }
     return min;
@@ -64,7 +64,6 @@ void fillMatrix(matrix& m, unsigned int size)
 			else{
 				m[i].push_back(unreachable);
 			}
-
 		}
     }
 }
@@ -75,7 +74,7 @@ vector<wormhole> calcWormholes(const matrix &input)
     fillMatrix(deduced, input.size());
     vector<wormhole> wormholes;
     for(index i = 0; i < input.size() - 1; i++){
-        index j = indexForShortest(input[i], i);
+        index j = indexForShortest(deduced, input[i], i);
         addWormhole(wormholes, i, j, input[i][j]);
         deduced[i][j] = input[i][j];
         deduced[j][i] = input[i][j];
