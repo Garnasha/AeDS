@@ -7,7 +7,8 @@ CONFIG -= qt
 SOURCES += main.cpp \
 	matrix.cpp \
     wormholeCalc.cpp \
-    indirectionSort.cpp
+    indirectionSort.cpp \
+    starchartIO.cpp
 
 
 include(deployment.pri)
