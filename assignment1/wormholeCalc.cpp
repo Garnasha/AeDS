@@ -16,7 +16,7 @@ void addLastWormhole(matrix const &input, matrix &deduced, vector<wormhole> &wor
     distance length = 0;
     for(index i = 0; i < input.size() - 1; i++){
         for(index j = i + 1; j < input[i].size(); j++){
-            if(input[i][j] < deduced[i][j] && input[i][j] < input[x][y]){
+            if(input[i][j] < deduced[i][j] && (input[i][j] < input[x][y] || (x == 0 && y == 0))){
                 x = i;
                 y = j;
                 length = input[x][y];
@@ -29,13 +29,13 @@ void addLastWormhole(matrix const &input, matrix &deduced, vector<wormhole> &wor
 void deduceDistances(matrix& deduced, index x, index y)
 {
     for(index i = 0; i < deduced[x].size(); i++){
-        if(deduced[x][i] != unreachable && deduced[y][i] > deduced[x][y] + deduced[x][i]){
+        if(deduced[x][i] != unreachable && deduced[y][i] > deduced[x][y] + deduced[x][i] && i != x){
             deduced[y][i] = deduced[x][y] + deduced[x][i];
             deduced[i][y] = deduced[y][i];
         }
     }
     for(index i = 0; i < deduced[y].size(); i++){
-        if(deduced[y][i] != unreachable && deduced[x][i] > deduced[x][y] + deduced[y][i]){
+        if(deduced[y][i] != unreachable && deduced[x][i] > deduced[x][y] + deduced[y][i] && i != y){
             deduced[x][i] = deduced[x][y] + deduced[y][i];
             deduced[i][x] = deduced[x][i];
         }
