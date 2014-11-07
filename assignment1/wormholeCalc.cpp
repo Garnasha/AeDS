@@ -44,8 +44,8 @@ void deduceDistances(matrix& deduced, index x, index y)
 
 index indexForShortest(vector<distance> const &row, index rowNr)
 {
-    index min = 0;
-    for(index j = rowNr + 1; j < row.size(); j++){
+	index min = rowNr + 1;
+	for(index j = min; j < row.size(); j++){
         if(row[min] > row[j])
             min = j;
     }
