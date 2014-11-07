@@ -1,16 +1,17 @@
 #include <cstdlib>
 #include <vector>
-#include <cassert>
 #include <tuple>
 
-using namespace std;
+using std::vector;
+using std::tuple;
+using std::make_tuple;
 
-typedef signed int Distance;
+typedef signed int distance;
 typedef unsigned int index;
-typedef vector<vector<Distance>> matrix;
-typedef tuple<index, index, Distance> wormhole;
+typedef vector<vector<distance>> matrix;
+typedef tuple<index, index, distance> wormhole;
 
-void addWormhole(vector<wormhole>& wormholes, index x, index y, Distance length)
+void addWormhole(vector<wormhole>& wormholes, index x, index y, distance length)
 {
     wormhole next = make_tuple(x, y, length);
     wormholes.push_back(next);
@@ -37,7 +38,7 @@ void deduceDistances(matrix& deduced, index x, index y)
     }
 }
 
-index indexForShortest(vector<Distance>& row, index rowNr)
+index indexForShortest(vector<distance>& row, index rowNr)
 {
     index min = 0;
     for(index j = rowNr + 1; j < row.size(); j++){
