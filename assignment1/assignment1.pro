@@ -18,5 +18,6 @@ HEADERS += \
     matrix.h \
     indirectionSort.h \
     starchartIO.h \
-    wormholeCalc.h
+    wormholeCalc.h \
+    starchart_types.h
 

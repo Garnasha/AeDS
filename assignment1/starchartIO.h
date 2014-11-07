@@ -2,9 +2,8 @@
 #define STARCHARTIO_H
 
 #include <iostream>
-#include <vector>
-#include <tuple>
 #include <limits>
+#include "starchart_types.h"
 
 std::vector<std::vector<signed int>> read_adjacency_matrix(
 		std::istream &instream);

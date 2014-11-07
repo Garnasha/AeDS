@@ -1,7 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <tuple>
-#include <limits>
+#include "starchartIO.h"
 
 using std::istream;
 using std::ostream;
@@ -9,11 +6,6 @@ using std::vector;
 using std::tuple;
 using std::size_t;
 using std::get;
-
-typedef signed int distance;
-typedef unsigned int index;
-typedef vector<vector<distance>> adjacency_matrix;
-typedef tuple<index, index, distance> wormhole;
 
 /* note: signed ints are used for distances because time traveling wormholes
  * are an unlikely but extremely easily caught edge case.

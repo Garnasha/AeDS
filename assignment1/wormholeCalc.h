@@ -1,14 +1,8 @@
 #ifndef WORMHOLECALC_H
 #define WORMHOLECALC_H
 
-#include <vector>
-#include <tuple>
 #include <limits>
-
-typedef signed int distance;
-typedef unsigned int index;
-typedef std::vector<std::vector<distance>> matrix;
-typedef std::tuple<index, index, distance> wormhole;
+#include "starchart_types.h"
 
 distance constexpr unreachable = std::numeric_limits<distance>::max();
 
