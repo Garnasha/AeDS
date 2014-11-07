@@ -1,7 +1,10 @@
 #include <iostream>
 #include <algorithm>
+#include <fstream>
 #include "matrix.h"
 #include "indirectionSort.h"
+#include "starchartIO.h"
+#include "wormholeCalc.h"
 
 int main()
 {
@@ -41,6 +44,16 @@ int main()
 	for(auto row : gen_sorted_coords(testmatrix)){
 		std::cout << "(" << row[0] << ", " << row[1] << "), ";
 	}
+	std::ifstream testinput("example.in");
+
+	auto testmatrix2 = read_adjacency_matrix(testinput);
+	for(auto row : testmatrix2){
+		for(auto member : row){
+			std::cout << member << ',';
+		}
+		std::cout << std::endl;
+	}
+	wormholes_to_stdout(calcWormholes(testmatrix2));
 	return 0;
 }
 

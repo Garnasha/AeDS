@@ -8,15 +8,15 @@ distance constexpr unreachable = std::numeric_limits<distance>::max();
 
 void addWormhole(std::vector<wormhole>& wormholes, index x, index y, distance length);
 
-void addLastWormhole(matrix& input, matrix& deduced);
+void addLastWormhole(matrix const &input, matrix &deduced, std::vector<wormhole> &wormholes);
 
-void deduceDistances(matrix& input, matrix& deduced, index x, index y);
+void deduceDistances(matrix& deduced, index x, index y);
 
-index indexForShortest(std::vector<distance> &row, index rowNr);
+index indexForShortest(const std::vector<distance> &row, index rowNr);
 
 void fillMatrix(matrix& m, size_t size);
 
-std::vector<wormhole> calcWormholes(matrix& input);
+std::vector<wormhole> calcWormholes(matrix const &input);
 
 
 #endif // WORMHOLECALC_H

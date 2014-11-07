@@ -13,9 +13,12 @@ using std::get;
 
 matrix read_adjacency_matrix(istream &instream){
 	size_t N;
+	char dev_null;
 	instream >> N;
+	std::cout << "Read N as " << N << std::endl;
 	matrix adjacencies(N,vector<distance>(N));
-	instream.ignore('-');
+	instream >> dev_null;
+	std::cout << "Discarding " << dev_null << std::endl;
 	for(size_t i = 0; i < N; ++i){
 		for(size_t j = 0; j < N; ++j){
 			instream >> adjacencies[i][j];
@@ -24,7 +27,7 @@ matrix read_adjacency_matrix(istream &instream){
 	return adjacencies;
 }
 
-void output_wormhole_list(ostream &outstream, vector<wormhole> links){
+void output_wormhole_list(ostream &outstream, vector<wormhole> const links){
 	outstream << links.size() << "\n-";
 	for(auto t : links){
 		outstream << '\n' << get<0>(t) << ' ' << get<1>(t) << ' ' << get<2>(t);
@@ -34,14 +37,13 @@ void output_wormhole_list(ostream &outstream, vector<wormhole> links){
 
 
 
-vector<vector<signed int> > adjacencies_from_stdin()
+matrix adjacencies_from_stdin()
 {
 	return read_adjacency_matrix(std::cin);
 }
 
 
-void wormholes_to_stdout(
-		vector<tuple<unsigned int, unsigned int, signed int> > links)
+void wormholes_to_stdout(vector<wormhole> const links)
 {
 	output_wormhole_list(std::cout,links);
 }

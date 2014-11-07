@@ -10,7 +10,7 @@ void addWormhole(vector<wormhole>& wormholes, index x, index y, distance length)
     wormholes.push_back(next);
 }
 
-void addLastWormhole(matrix& input, matrix& deduced, vector<wormhole>& wormholes)
+void addLastWormhole(matrix const &input, matrix &deduced, vector<wormhole> &wormholes)
 {
     index x = 0, y = 0;
     distance length = 0;
@@ -42,7 +42,7 @@ void deduceDistances(matrix& deduced, index x, index y)
     }
 }
 
-index indexForShortest(vector<distance>& row, index rowNr)
+index indexForShortest(vector<distance> const &row, index rowNr)
 {
     index min = 0;
     for(index j = rowNr + 1; j < row.size(); j++){
@@ -62,7 +62,7 @@ void fillMatrix(matrix& m, unsigned int size)
     }
 }
 
-vector<wormhole> calcWormholes(matrix& input)
+vector<wormhole> calcWormholes(const matrix &input)
 {
     matrix deduced;
     fillMatrix(deduced, input.size());

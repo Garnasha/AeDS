@@ -8,13 +8,10 @@
 std::vector<std::vector<signed int>> read_adjacency_matrix(
 		std::istream &instream);
 
-void output_wormhole_list(
-		std::ostream &outstream,
-		std::vector<std::tuple<unsigned int,unsigned int,signed int>> links);
+void output_wormhole_list(std::ostream &outstream,std::vector<wormhole> const links);
 
-std::vector<std::vector<signed int>> adjacencies_from_stdin();
+matrix adjacencies_from_stdin();
 
-void wormholes_to_stdout(
-		std::vector<std::tuple<unsigned int,unsigned int,signed int>> links);
+void wormholes_to_stdout(std::vector<wormhole> const links);
 
 #endif // STARCHARTIO_H

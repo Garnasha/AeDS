@@ -21,3 +21,6 @@ HEADERS += \
     wormholeCalc.h \
     starchart_types.h
 
+OTHER_FILES += \
+    example.in
+
