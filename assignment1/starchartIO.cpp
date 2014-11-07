@@ -11,17 +11,17 @@ using std::get;
  * are an unlikely but extremely easily caught edge case.
  */
 
-adjacency_matrix read_adjacency_matrix(istream &instream){
-	int N;
+matrix read_adjacency_matrix(istream &instream){
+	size_t N;
 	instream >> N;
-	adjacency_matrix matrix(N,vector<distance>(N));
+	matrix adjacencies(N,vector<distance>(N));
 	instream.ignore('-');
 	for(size_t i = 0; i < N; ++i){
 		for(size_t j = 0; j < N; ++j){
-			instream >> matrix[i][j];
+			instream >> adjacencies[i][j];
 		}
 	}
-	return matrix;
+	return adjacencies;
 }
 
 void output_wormhole_list(ostream &outstream, vector<wormhole> links){
