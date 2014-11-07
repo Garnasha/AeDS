@@ -1,15 +1,10 @@
-#include <cstdlib>
 #include <vector>
 #include <tuple>
+#include "wormholeCalc.h"
 
 using std::vector;
 using std::tuple;
 using std::make_tuple;
-
-typedef signed int distance;
-typedef unsigned int index;
-typedef vector<vector<distance>> matrix;
-typedef tuple<index, index, distance> wormhole;
 
 void addWormhole(vector<wormhole>& wormholes, index x, index y, distance length)
 {
@@ -29,13 +24,13 @@ void addLastWormhole(matrix& input, matrix& deduced)
 void deduceDistances(matrix& deduced, index x, index y)
 {
     for(index i = 0; i < deduced[x].size(); i++){
-        if(deduced[x][i] != INT_MAX && deduced[y][i] > deduced[x][y] + deduced[x][i]){
+        if(deduced[x][i] != unreachable && deduced[y][i] > deduced[x][y] + deduced[x][i]){
             deduced[y][i] = deduced[x][y] + deduced[x][i];
             deduced[i][y] = deduced[y][i];
         }
     }
     for(index i = 0; i < deduced[y].size(); i++){
-        if(deduced[y][i] != INT_MAX && deduced[x][i] > deduced[x][y] + deduced[y][i]){
+        if(deduced[y][i] != unreachable && deduced[x][i] > deduced[x][y] + deduced[y][i]){
             deduced[x][i] = deduced[x][y] + deduced[y][i];
             deduced[i][x] = deduced[x][i];
         }
@@ -58,7 +53,7 @@ void fillMatrix(matrix& m, unsigned int size)
         vector<int> row;
         m.push_back(row);
         for(index j = 0; j < size; j++)
-            m[i].push_back(INT_MAX);
+            m[i].push_back(unreachable);
     }
 }
 
