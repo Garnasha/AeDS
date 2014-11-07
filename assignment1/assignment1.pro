@@ -17,5 +17,6 @@ qtcAddDeployment()
 HEADERS += \
     matrix.h \
     indirectionSort.h \
-    starchartIO.h
+    starchartIO.h \
+    wormholeCalc.h
 
