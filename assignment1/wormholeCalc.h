@@ -7,22 +7,22 @@
 
 typedef signed int distance;
 typedef unsigned int index;
-typedef vector< vector<signed int> > matrix;
-typedef tuple<unsigned int, unsigned int, signed int> wormhole;
+typedef std::vector<std::vector<distance>> matrix;
+typedef std::tuple<index, index, distance> wormhole;
 
 distance constexpr unreachable = std::numeric_limits<distance>::max();
 
-void addWormhole(vector<wormhole>& wormholes, unsigned int x, unsigned int y, int length);
+void addWormhole(std::vector<wormhole>& wormholes, index x, index y, distance length);
 
 void addLastWormhole(matrix& input, matrix& deduced);
 
-void deduceDistances(matrix& input, matrix& deduced, unsigned int x, unsigned int y);
+void deduceDistances(matrix& input, matrix& deduced, index x, index y);
 
-unsigned int indexForShortest(vector<int> row, unsigned int rowNr);
+index indexForShortest(std::vector<distance> row, index rowNr);
 
-void fillMatrix(matrix& m, unsigned int size);
+void fillMatrix(matrix& m, size_t size);
 
-void calcWormholes(matrix& input);
+vector<wormhole> calcWormholes(matrix& input);
 
 
 #endif // WORMHOLECALC_H
