@@ -10,10 +10,16 @@ using std::tuple;
 using std::size_t;
 using std::get;
 
+typedef signed int distance;
+typedef unsigned int index;
+typedef vector<vector<distance>> adjacency_matrix;
+typedef tuple<index, index, distance> wormhole;
+
 /* note: signed ints are used for distances because time traveling wormholes
  * are an unlikely but extremely easily caught edge case.
  */
-vector<vector<signed int>> read_adjacency_matrix(istream &instream){
+
+adjacency_matrix read_adjacency_matrix(istream &instream){
 	int N;
 	instream >> N;
 	vector<vector<signed int>> matrix(N,vector(N));
@@ -26,8 +32,7 @@ vector<vector<signed int>> read_adjacency_matrix(istream &instream){
 	return matrix;
 }
 
-void output_wormhole_list(ostream &outstream,
-		vector<tuple<unsigned int,unsigned int,signed int>> links){
+void output_wormhole_list(ostream &outstream, vector<wormhole> links){
 	outstream << links.size() << "\n-";
 	for(auto t : links){
 		outstream << '\n' << get<0>(t) << ' ' << get<1>(t) << ' ' << get<2>(t);
