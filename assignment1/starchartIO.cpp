@@ -22,7 +22,7 @@ typedef tuple<index, index, distance> wormhole;
 adjacency_matrix read_adjacency_matrix(istream &instream){
 	int N;
 	instream >> N;
-	vector<vector<signed int>> matrix(N,vector(N));
+	adjacency_matrix matrix(N,vector<distance>(N));
 	instream.ignore('-');
 	for(size_t i = 0; i < N; ++i){
 		for(size_t j = 0; j < N; ++j){
