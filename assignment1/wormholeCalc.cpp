@@ -57,8 +57,15 @@ void fillMatrix(matrix& m, unsigned int size)
     for(index i = 0; i < size; i++){
         vector<int> row;
         m.push_back(row);
-        for(index j = 0; j < size; j++)
-            m[i].push_back(unreachable);
+		for(index j = 0; j < size; j++){
+			if(i == j){
+				m[i].push_back(0);
+			}
+			else{
+				m[i].push_back(unreachable);
+			}
+
+		}
     }
 }
 
