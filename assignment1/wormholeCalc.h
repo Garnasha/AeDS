@@ -1,15 +1,16 @@
 #ifndef WORMHOLECALC_H
 #define WORMHOLECALC_H
 
-#include <cstdlib>
 #include <vector>
-#include <cassert>
 #include <tuple>
+#include <limits>
 
 typedef signed int distance;
 typedef unsigned int index;
 typedef vector< vector<signed int> > matrix;
 typedef tuple<unsigned int, unsigned int, signed int> wormhole;
+
+distance unreachable = std::numeric_limits<distance>::max();
 
 void addWormhole(vector<wormhole>& wormholes, unsigned int x, unsigned int y, int length);
 
