@@ -10,7 +10,7 @@ typedef unsigned int index;
 typedef vector< vector<signed int> > matrix;
 typedef tuple<unsigned int, unsigned int, signed int> wormhole;
 
-distance unreachable = std::numeric_limits<distance>::max();
+distance constexpr unreachable = std::numeric_limits<distance>::max();
 
 void addWormhole(vector<wormhole>& wormholes, unsigned int x, unsigned int y, int length);
 
