@@ -19,7 +19,11 @@ void addWormhole(vector<wormhole>& wormholes, index x, index y, distance length)
 
 void addLastWormhole(matrix& input, matrix& deduced)
 {
+    for(index i = 0; i < input.size(); i++){
+        for(index j = 0; j < input.size(); j++){
 
+        }
+    }
 }
 
 void deduceDistances(matrix& deduced, index x, index y)
@@ -58,7 +62,7 @@ void fillMatrix(matrix& m, unsigned int size)
     }
 }
 
-void calcWormholes(matrix& input)
+vector<wormhole> calcWormholes(matrix& input)
 {
     matrix deduced;
     fillMatrix(deduced, input.size());
@@ -71,4 +75,5 @@ void calcWormholes(matrix& input)
         deduceDistances(deduced, i, j);
     }
     addLastWormhole(input, deduced);
+    return wormholes;
 }
