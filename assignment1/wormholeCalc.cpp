@@ -1,5 +1,3 @@
-#include <vector>
-#include <tuple>
 #include "wormholeCalc.h"
 
 using std::vector;
