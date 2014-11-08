@@ -5,6 +5,7 @@
 #include "indirectionSort.h"
 #include "starchartIO.h"
 #include "wormholeCalc.h"
+#include "prim.h"
 
 int main()
 {
@@ -44,7 +45,7 @@ int main()
 	for(auto row : gen_sorted_coords(testmatrix)){
 		std::cout << "(" << row[0] << ", " << row[1] << "), ";
 	}
-	std::ifstream testinput("breakput.txt");
+	std::ifstream testinput("example.in");
 
 	auto testmatrix2 = read_adjacency_matrix(testinput);
 	for(auto row : testmatrix2){
@@ -53,7 +54,7 @@ int main()
 		}
 		std::cout << std::endl;
 	}
-	wormholes_to_stdout(calcWormholes(testmatrix2));
+	wormholes_to_stdout(solve_starchart(testmatrix2));
 	return 0;
 }
 

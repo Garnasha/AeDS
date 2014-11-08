@@ -2,9 +2,13 @@
 #define PRIM_H
 
 #include <limits>
+#include <algorithm>
 #include "starchart_types.h"
 
+#ifndef UNREACHABLE
+#define UNREACHABLE
 distance constexpr unreachable = std::numeric_limits<distance>::max();
+#endif
 
 struct prim_minimals{
 	struct minpoint{
@@ -30,8 +34,10 @@ matrix gen_blank_inferred(size_t N);
 
 std::vector<wormhole> solve_starchart(matrix const &input);
 
-wormhole find_last_wormhole(matrix const &input, matrix const &inferred);
+void find_last_wormhole(matrix const &input,
+						matrix const &inferred,
+						std::vector<wormhole> &wormholes);
 
-void fill_diagonal(matrix M, distance n);
+void fill_diagonal(matrix &M, distance n);
 
 #endif // PRIM_H

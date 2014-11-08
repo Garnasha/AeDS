@@ -4,7 +4,10 @@
 #include <limits>
 #include "starchart_types.h"
 
+#ifndef UNREACHABLE
+#define UNREACHABLE
 distance constexpr unreachable = std::numeric_limits<distance>::max();
+#endif
 
 void addWormhole(std::vector<wormhole>& wormholes, index x, index y, distance length);
 
