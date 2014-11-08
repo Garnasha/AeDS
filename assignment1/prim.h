@@ -20,7 +20,7 @@ std::pair<std::vector<wormhole>,matrix> prim_MST_enhanced(matrix const &input);
 
 prim_minimals prim_init(matrix const &input);
 
-wormhole next_wormhole(prim_minimals const &meta,matrix const &input);
+wormhole next_wormhole(prim_minimals const &meta);
 
 void update_minimals(prim_minimals &meta,matrix const &input);
 
