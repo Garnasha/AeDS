@@ -13,10 +13,8 @@ matrix read_adjacency_matrix(istream &instream){
 	size_t N;
 	char dev_null;
 	instream >> N;
-	std::cout << "Read N as " << N << std::endl;
 	matrix adjacencies(N,vector<distance>(N));
-	instream >> dev_null;
-	std::cout << "Discarding " << dev_null << std::endl;
+	instream >> dev_null; //dirty, but works where neater alternatives didn't.
 	for(index i = 0; i < N; ++i){
 		for(index j = 0; j < N; ++j){
 			instream >> adjacencies[i][j];
