@@ -22,15 +22,21 @@ struct prim_minimals{
 
 std::pair<std::vector<wormhole>,matrix> prim_MST_enhanced(matrix const &input);
 
+//N
 prim_minimals prim_init(matrix const &input);
 
+//1
 wormhole next_wormhole(prim_minimals const &meta);
 
+//N
 void update_minimals(prim_minimals &meta,matrix const &input);
 
+//N
 void update_inferred(wormhole const &added,matrix &inferred);
 
+//N^2
 matrix gen_blank_inferred(size_t N);
+
 
 std::vector<wormhole> solve_starchart(matrix const &input);
 
