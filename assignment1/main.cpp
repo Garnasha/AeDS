@@ -44,7 +44,7 @@ int main()
 	for(auto row : gen_sorted_coords(testmatrix)){
 		std::cout << "(" << row[0] << ", " << row[1] << "), ";
 	}
-	std::ifstream testinput("example.in");
+	std::ifstream testinput("breakput.txt");
 
 	auto testmatrix2 = read_adjacency_matrix(testinput);
 	for(auto row : testmatrix2){
