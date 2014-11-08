@@ -104,6 +104,9 @@ void update_inferred(const wormhole &added, matrix &inferred)
 
 std::vector<wormhole> solve_starchart(const matrix &input)
 {
+	if(input.size() == 0){ //edge case. 1 and 2 can't happen, 0 could
+		return vector<wormhole>(0);
+	}
 	auto primresult = prim_MST_enhanced(input);
 	find_last_wormhole(input,primresult.second,primresult.first);
 	return primresult.first;
