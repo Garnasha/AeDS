@@ -7,8 +7,12 @@ matrix gen_blank_inferred(size_t N)
 	return vector<vector<distance>>(N,vector<distance>(N,unreachable));
 }
 
+prim_minimals prim_init(const matrix& input)
+{
 
-std::pair<std::vector<wormhole>, matrix> prim_MST_enhanced(const matrix &input)
+}
+
+std::pair<vector<wormhole>, matrix> prim_MST_enhanced(const matrix &input)
 {
 	prim_minimals metadata = prim_init(input);
 	vector<wormhole> wormholes(input.size());
