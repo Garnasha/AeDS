@@ -16,7 +16,7 @@ void addLastWormhole(matrix const &input, matrix &deduced, vector<wormhole> &wor
     distance length = 0;
     for(index i = 0; i < input.size() - 1; i++){
         for(index j = i + 1; j < input[i].size(); j++){
-            if(input[i][j] < deduced[i][j] && (input[i][j] < input[x][y] || (x == 0 && y == 0))){
+            if(input[i][j] < deduced[i][j] && (input[i][j] < input[x][y] || (x == y))){
                 x = i;
                 y = j;
                 length = input[x][y];
