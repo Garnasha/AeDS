@@ -8,7 +8,8 @@ SOURCES += main.cpp \
 	matrix.cpp \
     wormholeCalc.cpp \
     indirectionSort.cpp \
-    starchartIO.cpp
+    starchartIO.cpp \
+    prim.cpp
 
 
 include(deployment.pri)
@@ -19,7 +20,8 @@ HEADERS += \
     indirectionSort.h \
     starchartIO.h \
     wormholeCalc.h \
-    starchart_types.h
+    starchart_types.h \
+    prim.h
 
 OTHER_FILES += \
     example.in
