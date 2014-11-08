@@ -7,9 +7,7 @@ using std::tuple;
 using std::size_t;
 using std::get;
 
-/* note: signed ints are used for distances because time traveling wormholes
- * are an unlikely but extremely easily caught edge case.
- */
+
 
 matrix read_adjacency_matrix(istream &instream){
 	size_t N;
@@ -19,8 +17,8 @@ matrix read_adjacency_matrix(istream &instream){
 	matrix adjacencies(N,vector<distance>(N));
 	instream >> dev_null;
 	std::cout << "Discarding " << dev_null << std::endl;
-	for(size_t i = 0; i < N; ++i){
-		for(size_t j = 0; j < N; ++j){
+	for(index i = 0; i < N; ++i){
+		for(index j = 0; j < N; ++j){
 			instream >> adjacencies[i][j];
 		}
 	}
