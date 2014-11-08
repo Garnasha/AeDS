@@ -1,5 +1,7 @@
 #include "prim.h"
 
+#include <iostream>
+
 using std::vector;
 using std::get;
 using std::make_tuple;
@@ -16,6 +18,13 @@ std::pair<std::vector<wormhole>, matrix> prim_MST_enhanced(const matrix &input)
 	vector<wormhole> wormholes(input.size());
 	matrix inferred = gen_blank_inferred(input.size());
 	fill_diagonal(inferred,0);
+	std::cout << "Starting algorithm with blank inferred matrix:" << std::endl;
+	for(auto row : inferred){
+		for(auto member : row){
+			std::cout << member << ',';
+		}
+		std::cout << std::endl;
+	}
 	for(index i = 0; i < input.size() - 1; ++i){ //prim can find N-1 wormholes
 		wormholes[i] = next_wormhole(metadata);
 		update_inferred(wormholes[i],inferred);
@@ -48,9 +57,10 @@ prim_minimals prim_init(matrix const &input){
 	return starter;
 }
 
-void fill_diagonal(matrix M, distance n)
+void fill_diagonal(matrix &M, distance n)
 {
 	for(index i = 0; i < M.size(); ++i){
+		std::cout << "Placing " << n << " at i=" << i << std::endl;
 		M[i][i] = n;
 	}
 }
@@ -89,7 +99,9 @@ void update_inferred(const wormhole &added, matrix &inferred)
 	index from = get<0>(added); // is a star already in the MST.
 	index to = get<1>(added); // is the star to be added.
 	distance dist = get<2>(added); // is the length of the wormhole between the two.
+	std::cout << "Connecting " << from << ' ' << to << ' ' << dist << std::endl;
 	for(index i = 0; i < inferred.size(); ++i){
+		std::cout << "incorperating i=" << i << " at distance" << inferred[from][i] << std::endl;
 		if(inferred[from][i] != unreachable){
 			inferred[to][i]
 					= inferred[i][to]
@@ -111,13 +123,21 @@ std::vector<wormhole> solve_starchart(const matrix &input)
 //to the matrix of inferred distances, which was constructed just for this...
 void find_last_wormhole(const matrix &input,
 						const matrix &inferred,
-						vector<wormhole> wormholes)
+						vector<wormhole> &wormholes)
 {
+	std::cout << "Looking for last wormhole with inferred matrix:" << std::endl;
+	for(auto row : inferred){
+		for(auto member : row){
+			std::cout << member << ',';
+		}
+		std::cout << std::endl;
+	}
 	distance min = unreachable;
 	index minY = 0, minX = 0;
 	for(index i = 0; i < input.size(); ++i){
 		for(index j = i + 1; j < input.size(); ++j){
 			if(input[i][j] < inferred[i][j] && input[i][j] < min){
+				std::cout << "Found mismatch at ["<<i<<"]["<<j<<"]" << std::endl;
 				min = input[i][j];
 				minY = i;
 				minX = j;
@@ -127,6 +147,7 @@ void find_last_wormhole(const matrix &input,
 	//now there's an edge case, the catching of which is a bit ugly
 	//but still in at most 2 N searches of complexity N, so total O(N^2)
 	if(minY == 0 && minX == 0){ //no mismatch found: inferred already correct.
+		std::cout << "no mismatch";
 		for(index i = 0; i < input.size(); ++i){
 			for(index j = i + 1; j < input.size(); ++j){
 				if(std::find(wormholes.begin(),wormholes.end(),
@@ -144,6 +165,7 @@ void find_last_wormhole(const matrix &input,
 		}
 	}
 	//end edge case.
+	std::cout << "wormhole found: " << minY << ' ' << minX << ' ' << min << std::endl;
 	wormholes[wormholes.size() - 1] = make_tuple(minY,minX,min);
 	return;
 }
