@@ -17,7 +17,7 @@ struct TreeNode{
     unsigned int code;
 };
 typedef vector<TreeNode> Tree;
-const unsigned int max_line_length = 200000;
+const unsigned int max_line_length = 200000;  
 unsigned int N;
 
 void fillArray(unsigned int array[], unsigned int size){
