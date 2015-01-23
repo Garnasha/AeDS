@@ -1,11 +1,12 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
+#include <math.h>
 
 using namespace std;
 
-//-1 on parent, child1 or child2 means there is none.
-//depth denotes the amount of layers below this node.
+//depth denotes the amount of layers of children this node has.
 struct TreeNode{
     string name;
     bool function;
@@ -13,26 +14,18 @@ struct TreeNode{
     int child1;
     int child2;
     unsigned int depth;
+    unsigned int code;
 };
 typedef vector<TreeNode> Tree;
 const unsigned int max_line_length = 200000;
 unsigned int N;
 
-void assign(TreeNode& node, string n, bool f, int p, int c1, int c2, unsigned int d){
-    node.name = n;
-    node.function = f;
-    node.parent = p;
-    node.child1 = c1;
-    node.child2 = c2;
-    node.depth = d;
-}
-
-string readLine(){
+string readLine(istream& in){
     string line = "";
     bool stop = false;
-    for(unsigned int k = 0; k <  max_line_length && !stop; k++){
+    for(unsigned int k = 0; k < max_line_length && !stop; k++){
         char a;
-        cin.get(a);
+        in.get(a);
         line += a;
         if(a == '\n')
             stop = true;
@@ -40,125 +33,134 @@ string readLine(){
     return line;
 }
 
-vector<string> readLines(){
-    cin >> N;
-    cin.get();
+vector<string> readLines(istream& in){
+    in >> N;
+    in.get();
     vector<string> lines;
     for(unsigned int k = 0; k < N; k++){
-        string line = readLine();
+        string line = readLine(in);
         lines.push_back(line);
     }
     return lines;
 }
 
-void addDepth(Tree& tree, int start, unsigned int startDepth){
-    if(start >= 0 && startDepth >= tree[start].depth){
-        tree[start].depth++;
-        addDepth(tree, tree[start].parent, tree[start].depth);
-    }
+void buildTree(Tree& tree, string line, unsigned int& line_ind, unsigned int& nr_nodes, int parentNode, unsigned int currentNode);
+
+void addFunctionNode(Tree& tree, string line, string name, unsigned int& line_ind, unsigned int& nr_nodes, int parentNode, unsigned int currentNode){
+    TreeNode node = {name, true, parentNode, -1, -1, 0, 0};
+    tree.push_back(node);
+    line_ind++;
+    nr_nodes++;
+    tree[currentNode].child1 = nr_nodes;
+    buildTree(tree, line, line_ind, nr_nodes, currentNode, nr_nodes);
+    tree[currentNode].child2 = nr_nodes;
+    buildTree(tree, line, line_ind, nr_nodes, currentNode, nr_nodes);
+    tree[currentNode].depth = max(tree[tree[currentNode].child1].depth + 1, tree[tree[currentNode].child2].depth + 1);
 }
 
-Tree buildTree(string line){
-    Tree tree;
+void buildTree(Tree& tree, string line, unsigned int& line_ind, unsigned int& nr_nodes, int parentNode, unsigned int currentNode){
     string name = "";
-    int nr_nodes = 0;
-    for(unsigned int k = 0; k < line.size(); k++){
-        char c = line.at(k);
+    bool stop = false;
+    for(; line_ind < line.size() && !stop; line_ind++){
+        char c = line.at(line_ind);
         if(c == '('){
-            TreeNode node;
-            if(nr_nodes == 0)
-                assign(node, name, true, -1, -1, -1, 0);
-            else{
-                int n = 0;
-                while(!tree[nr_nodes-1-n].function || (tree[nr_nodes-1-n].child1 != -1))
-                    n++;
-                if(tree[nr_nodes-1-n].child2 == -1)
-                    addDepth(tree, nr_nodes-1-n, 0);
-                assign(node, name, true, nr_nodes-1-n, -1, -1, 0);
-                tree[nr_nodes-1-n].child1 = tree[nr_nodes-1-n].child2;
-                tree[nr_nodes-1-n].child2 = nr_nodes;
-            }
+            addFunctionNode(tree, line, name, line_ind, nr_nodes, parentNode, currentNode);
+            stop = true;
+        }
+        if(c == ',' || c == ')' || (c == '\n' && name.compare("") != 0)){
+            TreeNode node = {name, false, parentNode, -1, -1, 0, 0};
             tree.push_back(node);
             nr_nodes++;
-            name = "";
+            stop = true;
         }
-        else if(c == ',' && name.compare("") != 0){
-            TreeNode node;
-            int n = 0;
-            while(!tree[nr_nodes-1-n].function || (tree[nr_nodes-1-n].child1 != -1))
-                n++;
-            addDepth(tree, nr_nodes-1-n, 0);
-            assign(node, name, false, nr_nodes-1-n, -1, -1, 0);
-            tree[nr_nodes-1-n].child1 = tree[nr_nodes-1-n].child2;
-            tree[nr_nodes-1-n].child2 = nr_nodes;
-            tree.push_back(node);
-            nr_nodes++;
-            name = "";
-        }
-        else if(c == ',' && name.compare("") == 0){
-            //do nothing
-        }
-        else if(c == ')' && name.compare("") != 0){
-            TreeNode node;
-            int n = 1;
-            while(!tree[nr_nodes-1-n].function || (tree[nr_nodes-1-n].child1 != -1))
-                n++;
-            assign(node, name, false, nr_nodes-1-n, -1, -1, 0);
-            tree[nr_nodes-1-n].child1 = tree[nr_nodes-1-n].child2;
-            tree[nr_nodes-1-n].child2 = nr_nodes;
-            tree.push_back(node);
-            nr_nodes++;
-            name = "";
-        }
-        else if(c == ')' && name.compare("") == 0){
-            //do nothing
-        }
-        else{
-            name += c;
-        }
+        name += c;
     }
-    return tree;
 }
 
-vector<Tree> buildTrees(vector<string> lines){
+vector<Tree> buildTrees(vector<string>& lines){
     vector<Tree> trees;
     for(unsigned int k = 0; k < N; k++){
-        Tree tree = buildTree(lines[k]);
+        Tree tree;
+        unsigned int i = 0, j = 0;
+        buildTree(tree, lines[k], i, j, -1, 0);
         trees.push_back(tree);
     }
     return trees;
 }
 
+string intToString(unsigned int code){
+    string codestr = "";
+    for(unsigned int k = 0; k < log((double)code); k++){
+        unsigned int clog = (unsigned int)log((double)code);
+        unsigned int currentDigit = (code/(unsigned int)pow(10, (double)(clog - k)))%10;
+        if(codestr.compare("") != 0 || currentDigit != 0){
+            codestr += (char)(currentDigit + 48);
+        }
+    }
+    return codestr;
+}
+
+bool sameSubTrees(Tree& tree, TreeNode node1, TreeNode node2){
+    if(node1.name.compare(node2.name) == 0 && node1.depth == node2.depth){
+        if(!node1.function){
+            return true;
+        }
+        return sameSubTrees(tree, tree[node1.child1], tree[node2.child1])
+                && sameSubTrees(tree, tree[node1.child2], tree[node2.child2]);
+    }
+    return false;
+}
+
+Tree reduceTree(Tree& unCoded){
+    Tree codedTree;
+    unsigned int c = 1;
+    for(unsigned int k = 0; k < unCoded.size(); k++){
+        bool found = false;
+        for(unsigned int l = 0; l < codedTree.size() && !found; l++){
+            if(sameSubTrees(unCoded, unCoded[k], codedTree[l])){
+                TreeNode cnode = {intToString(codedTree[l].code), false, unCoded[k].parent, -1, -1, 0, 0};
+                codedTree.push_back(cnode);
+                found = true;
+            }
+        }
+        if(!found){
+            TreeNode cnode = {unCoded[k].name, unCoded[k].function, unCoded[k].parent, unCoded[k].child1, unCoded[k].child2, unCoded[k].depth, c};
+            codedTree.push_back(cnode);
+            c++;
+        }
+    }
+    return codedTree;
+}
+
+vector<Tree> reduceTrees(vector<Tree>& unCoded){
+    vector<Tree> codedTrees;
+    for(unsigned int k = 0; k < N; k++){
+        Tree codedTree = reduceTree(unCoded[k]);
+        codedTrees.push_back(codedTree);
+    }
+    return codedTrees;
+}
+
+void flattenTree(Tree& tree, TreeNode node){
+    cout << node.name;
+    if(node.function){
+        cout << "(";
+        flattenTree(tree, tree[node.child1]);
+        cout << ",";
+        flattenTree(tree, tree[node.child2]);
+        cout << ")";
+    }
+}
+
 int main()
 {
-    vector<string> lines = readLines();
-    cout << endl << N << endl;
-    for(unsigned int k = 0; k < N; k++)
-        cout << lines[k];
-    cout << endl;
+    ifstream in;
+    in.open("C:\\Users\\hessel\\Documents\\QT Projects\\AeDS2\\samples.in");
+    vector<string> lines = readLines(cin);
     vector<Tree> trees = buildTrees(lines);
-    //parents:
-    cout << "parents:" << endl;
+    cout << endl;
     for(unsigned int k = 0; k < N; k++){
-        for(unsigned int l = 0; l < trees[k].size(); l++){
-            cout << trees[k][l].parent << " ";
-        }
-        cout << endl;
-    }
-    //depth:
-    cout << "depth:" << endl;
-    for(unsigned int k = 0; k < N; k++){
-        for(unsigned int l = 0; l < trees[k].size(); l++){
-            cout << trees[k][l].depth << " ";
-        }
-        cout << endl;
-    }
-    //children, separated with comma:
-    cout << "children:" << endl;
-    for(unsigned int k = 0; k < N; k++){
-        for(unsigned int l = 0; l < trees[k].size(); l++){
-            cout << trees[k][l].child1 << "," << trees[k][l].child2 << " ";
-        }
+        flattenTree(trees[k], trees[k][0]);
         cout << endl;
     }
     return 0;
