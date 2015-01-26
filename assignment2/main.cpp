@@ -20,6 +20,12 @@ typedef vector<TreeNode> Tree;
 const unsigned int max_line_length = 200000;
 unsigned int N;
 
+void fillArray(unsigned int array[], unsigned int size){
+    for(unsigned int k = 0; k < size; k++){
+        array[k] = 0;
+    }
+}
+
 string readLine(istream& in){
     string line = "";
     bool stop = false;
@@ -111,23 +117,77 @@ bool sameSubTrees(Tree& tree, TreeNode node1, TreeNode node2){
     return false;
 }
 
+TreeNode findCorresponding(Tree& unCoded, TreeNode codedNode, unsigned int nodeIndex){
+    if(codedNode.code == 0){
+        TreeNode node = {"", false, 0, 0, 0, 0, 0};
+        return node;
+    }
+    for(unsigned int k = nodeIndex; k < unCoded.size(); k++){
+        if(unCoded[k].name == codedNode.name){
+            return unCoded[k];
+        }
+    }
+    TreeNode node = {"", false, 0, 0, 0, 0, 0};
+    return node;
+}
+
+unsigned int countNodes(Tree& unCoded, TreeNode node){
+    unsigned int count = 1;
+    if(node.function){
+        count += countNodes(unCoded, unCoded[node.child1])
+                + countNodes(unCoded, unCoded[node.child2]);
+    }
+    return count;
+}
+
+void adjustParent(unsigned int nodesRemoved[], TreeNode& node){
+    for(unsigned int k = 0; (int)k < node.parent; k++){
+        node.parent -= nodesRemoved[k];
+    }
+}
+
+void adjustChildren(Tree& codedTree, unsigned int nodesRemoved[], TreeNode startNode){
+    if(startNode.function){
+        for(unsigned int k = 0; (int)k < startNode.child1; k++){
+            startNode.child1 -= nodesRemoved[k];
+        }
+        for(unsigned int k = 0; (int)k < startNode.child2; k++){
+            startNode.child2 -= nodesRemoved[k];
+        }
+        if(startNode.parent > -1){
+            adjustChildren(codedTree, nodesRemoved, codedTree[startNode.parent]);
+        }
+    }
+}
+
+void checkSubTree(Tree& unCoded, Tree& codedTree, unsigned int nodesRemoved[], unsigned int& c, unsigned int k){
+    bool found = false;
+    for(unsigned int l = 0; l < codedTree.size() && !found; l++){
+        TreeNode deCoded = findCorresponding(unCoded, codedTree[l], l);
+        if(deCoded.name.compare("") != 0 && sameSubTrees(unCoded, unCoded[k], deCoded)){
+            TreeNode cnode = {intToString(codedTree[l].code), false, unCoded[k].parent, -1, -1, 0, 0};
+            nodesRemoved[codedTree.size()] = countNodes(unCoded, unCoded[k]) - 1;
+            adjustParent(nodesRemoved, cnode);
+            codedTree.push_back(cnode);
+            adjustChildren(codedTree, nodesRemoved, codedTree[cnode.parent]);
+            found = true;
+        }
+    }
+    if(!found){
+        TreeNode cnode = {unCoded[k].name, unCoded[k].function, unCoded[k].parent, unCoded[k].child1, unCoded[k].child2, unCoded[k].depth, c};
+        adjustParent(nodesRemoved, cnode);
+        codedTree.push_back(cnode);
+        c++;
+    }
+}
+
 Tree reduceTree(Tree& unCoded){
     Tree codedTree;
     unsigned int c = 1;
+    unsigned int nodesRemoved[unCoded.size()];
+    fillArray(nodesRemoved, unCoded.size());
     for(unsigned int k = 0; k < unCoded.size(); k++){
-        bool found = false;
-        for(unsigned int l = 0; l < codedTree.size() && !found; l++){
-            if(sameSubTrees(unCoded, unCoded[k], codedTree[l])){
-                TreeNode cnode = {intToString(codedTree[l].code), false, unCoded[k].parent, -1, -1, 0, 0};
-                codedTree.push_back(cnode);
-                found = true;
-            }
-        }
-        if(!found){
-            TreeNode cnode = {unCoded[k].name, unCoded[k].function, unCoded[k].parent, unCoded[k].child1, unCoded[k].child2, unCoded[k].depth, c};
-            codedTree.push_back(cnode);
-            c++;
-        }
+        checkSubTree(unCoded, codedTree, nodesRemoved, c, k);
     }
     return codedTree;
 }
@@ -155,12 +215,13 @@ void flattenTree(Tree& tree, TreeNode node){
 int main()
 {
     ifstream in;
-    in.open("C:\\Users\\hessel\\Documents\\QT Projects\\AeDS2\\samples.in");
+    in.open("C:\\Users\\hessel\\Documents\\QT Projects\\AeDS2\\random.in");
     vector<string> lines = readLines(cin);
     vector<Tree> trees = buildTrees(lines);
+    vector<Tree> codedTrees = reduceTrees(trees);
     cout << endl;
     for(unsigned int k = 0; k < N; k++){
-        flattenTree(trees[k], trees[k][0]);
+        flattenTree(codedTrees[k], codedTrees[k][0]);
         cout << endl;
     }
     return 0;
