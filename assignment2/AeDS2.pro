@@ -4,19 +4,16 @@
 #
 #-------------------------------------------------
 
-QT       += core
-
-QT       -= gui
-
 TARGET = AeDS2
 CONFIG   += console
+CONFIG   += c++11
 CONFIG   -= app_bundle
-
-TEMPLATE = app
-
+CONFIG   -= qt
 
 SOURCES += main.cpp \
-    expressiontree.cpp
+    parsetree.cpp \
+    csetree.cpp
 
 HEADERS += \
-    expressiontree.h
+    parsetree.h \
+    csetree.h
