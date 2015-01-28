@@ -12,8 +12,10 @@ CONFIG   -= qt
 
 SOURCES += main.cpp \
     parsetree.cpp \
-    csetree.cpp
+    csetree.cpp \
+    parser.cpp
 
 HEADERS += \
     parsetree.h \
-    csetree.h
+    csetree.h \
+    parser.h
