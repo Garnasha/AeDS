@@ -1,9 +1,13 @@
+#pragma once
 #ifndef PARSETREE_H
 #define PARSETREE_H
 #include <string>
 #include <memory>
 #include <functional>
 
+
+//load of get methods, very tempting to just declare all member fields
+//as public const, but I'm not sure how that'd play with the constructor.
 class ParseTree
 {
 private:
@@ -15,12 +19,13 @@ public:
 	ParseTree(std::string identifier,
 			  std::unique_ptr<ParseTree> left_child,
 			  std::unique_ptr<ParseTree> right_child);//node
-	bool is_leaf();
-	ParseTree *get_left();
-	ParseTree *get_right();
-	size_t get_hash();
+	bool is_leaf() const;
+	ParseTree *get_left() const;
+	ParseTree *get_right() const;
+	size_t get_hash() const;
+	std::string get_id() const;
 
-	bool operator==(ParseTree const &rhs);
+	bool operator==(ParseTree const &rhs) const;
 };
 
 /*

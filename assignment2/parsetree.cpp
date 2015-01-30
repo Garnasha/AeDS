@@ -42,28 +42,33 @@ ParseTree::ParseTree(std::string identifier,
 {
 }
 
-bool ParseTree::is_leaf()
+bool ParseTree::is_leaf() const
 {
 	return left == nullptr;
 }
 
-ParseTree *ParseTree::get_left()
+ParseTree *ParseTree::get_left() const
 {
 	return left.get();
 }
 
-ParseTree *ParseTree::get_right()
+ParseTree *ParseTree::get_right() const
 {
 	return right.get();
 }
 
-size_t ParseTree::get_hash()
+size_t ParseTree::get_hash() const
 {
 	return hashval;
 }
 
+std::string ParseTree::get_id() const
+{
+	return id;
+}
 
-bool ParseTree::operator==(ParseTree const &rhs)
+
+bool ParseTree::operator==(ParseTree const &rhs) const
 {
 	return (id == rhs.id && (
 				(left == rhs.left) || //test: leaf or identical

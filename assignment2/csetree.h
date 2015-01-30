@@ -1,9 +1,10 @@
+#pragma once
 #ifndef CSETREE_H
 #define CSETREE_H
 #include <string>
 #include <memory>
 #include <functional>
-#include <unordered_map>
+#include "parsetreemap.h"
 
 
 class CSETree
@@ -11,8 +12,13 @@ class CSETree
 private:
 	std::string id;
 	std::unique_ptr<CSETree> left,right;
+	static CSETree constructor_helper(ParseTree * const in_root,
+									  size_t const & node_count);
 public:
-	CSETree();
+	CSETree(ParseTree * const in_root, size_t const & node_count);
+	CSETree(ParseTree * const in_node,ParseTreeMap map,unsigned int &n);
+
+	std::string to_string() const;
 };
 
 #endif // CSETREE_H
