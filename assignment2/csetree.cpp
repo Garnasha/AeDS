@@ -14,7 +14,7 @@ CSETree::CSETree(ParseTree * const in_root, const size_t &node_count):
 
 }
 
-CSETree::CSETree(ParseTree * node, ParseTreeMap map, unsigned int &n)
+CSETree::CSETree(ParseTree * const node, ParseTreeMap map, unsigned int &n)
 {
 
 	if(map.find(node) == map.end()){
