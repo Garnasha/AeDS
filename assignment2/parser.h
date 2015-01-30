@@ -7,14 +7,12 @@
 #include <fstream>
 #include "parsetree.h"
 
-using namespace std;
-
 const unsigned int max_length = 200000;
 
-unique_ptr<ParseTree> parse_line(string line, unsigned int& line_ind);
+std::unique_ptr<ParseTree> parse_line(std::string line, unsigned int& line_ind, unsigned int& nr_nodes);
 
-vector<string> read_lines(istream& in, const unsigned int amnt_lines);
+std::vector<std::string> read_lines(std::istream& in, const unsigned int amnt_lines);
 
-vector< unique_ptr<ParseTree> > parse_input(istream& in);
+std::vector< std::unique_ptr<ParseTree> > parse_input(std::istream& in, unsigned int& nr_nodes);
 
 #endif // PARSER_H

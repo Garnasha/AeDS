@@ -2,14 +2,16 @@
 
 using namespace std;
 
-unique_ptr<ParseTree> parse_line(string line, unsigned int& line_ind){
+unique_ptr<ParseTree> parse_line(string line, unsigned int& line_ind, unsigned int &nr_nodes){
     string name = "";
     for(; line_ind < line.size(); line_ind++){
         if(line[line_ind] == '('){
-            unique_ptr<ParseTree> ptr(new ParseTree(move(name), parse_line(line, line_ind), parse_line(line, line_ind)));
+            nr_nodes++;
+            unique_ptr<ParseTree> ptr(new ParseTree(move(name), parse_line(line, line_ind, nr_nodes), parse_line(line, line_ind, nr_nodes)));
             return ptr;
         }
         if(line[line_ind] == ')' || line[line_ind] == ',' || (line[line_ind] == '\n' && name.size() > 0)){
+            nr_nodes++;
             unique_ptr<ParseTree> ptr(new ParseTree(move(name)));
             return ptr;
         }
@@ -36,7 +38,7 @@ vector<string> read_lines(istream& in, const unsigned int amnt_lines){
     return lines;
 }
 
-vector< unique_ptr<ParseTree> > parse_input(istream& in){
+vector< unique_ptr<ParseTree> > parse_input(istream& in, unsigned int& nr_nodes){
     vector< unique_ptr<ParseTree> > treePtrs;
     unsigned int amnt_lines;
     in >> amnt_lines;
@@ -44,7 +46,7 @@ vector< unique_ptr<ParseTree> > parse_input(istream& in){
     vector<string> lines = read_lines(in, amnt_lines);
     for(unsigned int k = 0; k < amnt_lines; k++){
         unsigned int line_ind = 0;
-        treePtrs.push_back(parse_line(lines[k], line_ind));
+        treePtrs.push_back(parse_line(lines[k], line_ind, nr_nodes));
     }
     return treePtrs;
 }
