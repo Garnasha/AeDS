@@ -63,7 +63,7 @@ size_t ParseTree::get_hash()
 }
 
 
-bool ParseTree::operator==(const ParseTree &rhs)
+bool ParseTree::operator==(ParseTree const &rhs)
 {
 	return (id == rhs.id && (
 				(left == rhs.left) || //test: leaf or identical

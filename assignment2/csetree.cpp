@@ -1,5 +1,5 @@
 #include "csetree.h"
 
-CseTree::CseTree()
+CSETree::CSETree()
 {
 }

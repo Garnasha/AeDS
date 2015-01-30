@@ -2,8 +2,6 @@
 #define PARSETREE_H
 #include <string>
 #include <memory>
-#include <iostream>
-#include <fstream>
 #include <functional>
 
 class ParseTree
@@ -18,11 +16,11 @@ public:
 			  std::unique_ptr<ParseTree> left_child,
 			  std::unique_ptr<ParseTree> right_child);//node
 	bool is_leaf();
-	ParseTree* get_left();
-	ParseTree* get_right();
+	ParseTree *get_left();
+	ParseTree *get_right();
 	size_t get_hash();
 
-	bool operator==(const ParseTree& rhs);
+	bool operator==(ParseTree const &rhs);
 };
 
 /*

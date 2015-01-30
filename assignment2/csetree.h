@@ -2,14 +2,17 @@
 #define CSETREE_H
 #include <string>
 #include <memory>
-#include "parsetree.h"
+#include <functional>
+#include <unordered_map>
 
-class CseTree
+
+class CSETree
 {
 private:
-
+	std::string id;
+	std::unique_ptr<CSETree> left,right;
 public:
-	CseTree();
+	CSETree();
 };
 
 #endif // CSETREE_H

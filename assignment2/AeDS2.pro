@@ -18,4 +18,5 @@ SOURCES += main.cpp \
 HEADERS += \
     parsetree.h \
     csetree.h \
-    parser.h
+    parser.h \
+    parsetreemap.h
