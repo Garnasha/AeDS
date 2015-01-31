@@ -3,6 +3,7 @@
 using namespace std;
 
 unique_ptr<ParseTree> parse_line(string line, unsigned int& line_ind, unsigned int &nr_nodes){
+	std::cerr << "entering parse_line" << std::endl;
     string name = "";
     for(; line_ind < line.size(); line_ind++){
         char c = line.at(line_ind);
@@ -29,8 +30,8 @@ vector<string> read_lines(istream& in, const unsigned int amnt_lines){
         string line = "";
 		bool stop = false;
 		for(unsigned int l = 0; l < max_length && !stop; l++){
-			if(!(l%10000))
-				std::cerr << "readlines inner pass: " << l << " out of " << max_length << std::endl;
+			//if(!(l%10000))
+			//	std::cerr << "readlines inner pass: " << l << " out of " << max_length << std::endl;
             char a;
             in.get(a);
             line += a;
@@ -52,10 +53,12 @@ vector< unique_ptr<ParseTree> > parse_input(istream& in, vector<unsigned int>& n
     vector< unique_ptr<ParseTree> > treePtrs;
     unsigned int amnt_lines;
     in >> amnt_lines;
+	std::cerr << amnt_lines << std::endl;
+	std::abort;
     in.get();
 	std::cerr << "about to enter read_lines to read " << amnt_lines << std::endl;
     vector<string> lines = read_lines(in, amnt_lines);
-	std::cerr << "Entering parse loop, intending to read " << amnt_lines << std::endl;
+	std::cerr << "Entering parse loop, intending to 3 " << amnt_lines << std::endl;
 	for(unsigned int k = 0; k < amnt_lines; k++){
 		std::cerr << "parse loop pass: " << k << std::endl;
         unsigned int nr_nodes = 0;

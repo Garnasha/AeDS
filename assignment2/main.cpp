@@ -8,7 +8,12 @@ using namespace std;
 
 int main(){
     ifstream in;
-    in.open("samples.in");
+	in.open("C:/Users/Sal/Documents/GitHub/AeDS/assignment2/samples.in");
+	if(in)
+		std::cerr << "Opened samples.in succesfully" << std::endl;
+	if(!in){
+		std::cerr << "Failed to open samples.in" << std::endl;
+	}
     vector<unsigned int> nodes_per_line;
 	std::cerr << "Testing cerr stream availability: OK" << std::endl;
     vector< unique_ptr<ParseTree> > treePtrs = parse_input(in, nodes_per_line);
