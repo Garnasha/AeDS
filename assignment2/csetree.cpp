@@ -6,7 +6,8 @@ CSETree CSETree::constructor_helper(ParseTree const * const in_root,
 									size_t const & node_count)
 {
     unsigned int n = 0;
-	return CSETree(in_root,ParseTreeMap(node_count/2),n);
+	ParseTreeMap map(node_count);
+	return CSETree(in_root,map,n);
 }
 
 CSETree::CSETree(ParseTree const * const in_root, size_t const &node_count):
@@ -14,7 +15,7 @@ CSETree::CSETree(ParseTree const * const in_root, size_t const &node_count):
 {
 }
 
-CSETree::CSETree(ParseTree const * const node, ParseTreeMap map, unsigned int &n)
+CSETree::CSETree(ParseTree const * const node, ParseTreeMap & map, unsigned int &n)
 {
 
 	if(map.find(node) == map.end()){

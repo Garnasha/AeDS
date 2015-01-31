@@ -14,7 +14,7 @@ private:
 	std::unique_ptr<CSETree> left,right;
 public:
 	CSETree(ParseTree const * const in_root, size_t const & node_count);
-	CSETree(ParseTree const * const in_node, ParseTreeMap map, unsigned int &n);
+	CSETree(ParseTree const * const in_node, ParseTreeMap & map, unsigned int &n);
 	static CSETree constructor_helper(ParseTree const * const in_root,
 										 size_t const & node_count);
 

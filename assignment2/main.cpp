@@ -8,7 +8,7 @@ using namespace std;
 
 int main(){
     ifstream in;
-    in.open("C:\\Users\\hessel\\Documents\\Qt Projects\\AeDS2\\samples.in");
+	in.open("C:/Users/Sal/Documents/GitHub/AeDS/assignment2/samples.in");
     if(in)
         std::cerr << "Opened samples.in succesfully" << std::endl;
     if(!in){
