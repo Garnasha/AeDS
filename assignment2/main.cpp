@@ -10,8 +10,11 @@ int main(){
     ifstream in;
     in.open("samples.in");
     vector<unsigned int> nodes_per_line;
+	std::cerr << "Testing cerr stream availability: OK" << std::endl;
     vector< unique_ptr<ParseTree> > treePtrs = parse_input(in, nodes_per_line);
+	std::cerr << "Passed parse_input" <<std::endl;
     vector< unique_ptr<CSETree> > csePtrs;
+	std::cerr << "Succesfully passed ParseTree construction." << std::endl;
 	for(unsigned int k = 0; k < treePtrs.size(); k++){
 		csePtrs.push_back(unique_ptr<CSETree>(
                               new CSETree(treePtrs[k].get(), nodes_per_line[k])));
