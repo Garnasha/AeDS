@@ -12,11 +12,11 @@ class CSETree
 private:
 	std::string id;
 	std::unique_ptr<CSETree> left,right;
-	static CSETree constructor_helper(ParseTree const * const in_root,
+	static CSETree constructor_helper(ParseTree * const in_root,
 									  size_t const & node_count);
 public:
-	CSETree(ParseTree const * const in_root, size_t const & node_count);
-	CSETree(ParseTree const * const in_node, ParseTreeMap map, unsigned int &n);
+	CSETree(ParseTree * const in_root, size_t const & node_count);
+	CSETree(ParseTree * const in_node,ParseTreeMap map,unsigned int &n);
 
 	std::string to_string() const;
 };

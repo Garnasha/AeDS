@@ -218,7 +218,7 @@ void flattenTree(Tree& tree, TreeNode node){
 int main()
 {
     ifstream in;
-    in.open("C:\\Users\\hessel\\Documents\\QT Projects\\AeDS2\\big.in");
+    in.open("samples.in");
     vector<string> lines = readLines(in);
     cout << "Done reading..." << endl;
     vector<Tree> trees = buildTrees(lines);
