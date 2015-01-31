@@ -8,9 +8,8 @@
 //load of get methods, very tempting to just declare all member fields
 //as public const, but I'm not sure how that'd play with the constructor.
 //
-//either way, I think I've made this entire class immutable now,
-//which is correct for the algorithm it's used in.
-//it just takes a lot of const qualifiers, not sure what that does for clarity
+//edit: turns out it works fine, but I don't feel like refactoring out
+//all calls to the used functions now.
 class ParseTree
 {
 private:
