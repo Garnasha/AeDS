@@ -38,15 +38,17 @@ vector<string> read_lines(istream& in, const unsigned int amnt_lines){
     return lines;
 }
 
-vector< unique_ptr<ParseTree> > parse_input(istream& in, unsigned int& nr_nodes){
+vector< unique_ptr<ParseTree> > parse_input(istream& in, vector<unsigned int>& nodes_per_line){
     vector< unique_ptr<ParseTree> > treePtrs;
     unsigned int amnt_lines;
     in >> amnt_lines;
     in.get();
     vector<string> lines = read_lines(in, amnt_lines);
     for(unsigned int k = 0; k < amnt_lines; k++){
+        unsigned int nr_nodes = 0;
         unsigned int line_ind = 0;
         treePtrs.push_back(parse_line(lines[k], line_ind, nr_nodes));
+        nodes_per_line.push_back(nr_nodes);
     }
     return treePtrs;
 }

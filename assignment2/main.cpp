@@ -9,15 +9,14 @@ using namespace std;
 int main(){
     ifstream in;
     in.open("samples.in");
-    unsigned int nr_nodes = 0;
-    vector< unique_ptr<ParseTree> > treePtrs = parse_input(in, nr_nodes);
+    vector<unsigned int> nodes_per_line;
+    vector< unique_ptr<ParseTree> > treePtrs = parse_input(in, nodes_per_line);
     vector< unique_ptr<CSETree> > csePtrs;
-    vector<CSETree> cseTrees;
 	for(unsigned int k = 0; k < treePtrs.size(); k++){
 		csePtrs.push_back(unique_ptr<CSETree>(
-							  new CSETree(treePtrs[k].get(), nr_nodes)));
+                              new CSETree(treePtrs[k].get(), nodes_per_line[k])));
     }
-    for(unsigned int k = 0; k < cseTrees.size(); k++){
+    for(unsigned int k = 0; k < csePtrs.size(); k++){
 		cout << csePtrs[k]->to_string() << endl;
     }
     return 0;

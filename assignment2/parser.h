@@ -13,6 +13,6 @@ std::unique_ptr<ParseTree> parse_line(std::string line, unsigned int& line_ind, 
 
 std::vector<std::string> read_lines(std::istream& in, const unsigned int amnt_lines);
 
-std::vector< std::unique_ptr<ParseTree> > parse_input(std::istream& in, unsigned int& nr_nodes);
+std::vector< std::unique_ptr<ParseTree> > parse_input(std::istream& in, std::vector<unsigned int>& nodes_per_line);
 
 #endif // PARSER_H
