@@ -47,12 +47,12 @@ bool ParseTree::is_leaf() const
 	return left == nullptr;
 }
 
-ParseTree *ParseTree::get_left() const
+ParseTree const * ParseTree::get_left() const
 {
 	return left.get();
 }
 
-ParseTree *ParseTree::get_right() const
+ParseTree const * ParseTree::get_right() const
 {
 	return right.get();
 }
@@ -62,7 +62,7 @@ size_t ParseTree::get_hash() const
 	return hashval;
 }
 
-std::string ParseTree::get_id() const
+std::string const ParseTree::get_id() const
 {
 	return id;
 }
@@ -71,7 +71,7 @@ std::string ParseTree::get_id() const
 bool ParseTree::operator==(ParseTree const &rhs) const
 {
 	return (id == rhs.id && (
-				(left == rhs.left) || //test: leaf or identical
+				(left == rhs.left) || //test for leaf and/or identical
 				(*left == *(rhs.left) && *right == *(rhs.right))));
 }
 

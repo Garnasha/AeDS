@@ -5,27 +5,30 @@
 #include <memory>
 #include <functional>
 
-
 //load of get methods, very tempting to just declare all member fields
 //as public const, but I'm not sure how that'd play with the constructor.
+//
+//either way, I think I've made this entire class immutable now,
+//which is correct for the algorithm it's used in.
+//it just takes a lot of const qualifiers, not sure what that does for clarity
 class ParseTree
 {
 private:
-	std::string id;
-	std::unique_ptr<ParseTree> left,right;
-	size_t hashval;
+	std::string const id;
+	std::unique_ptr<ParseTree> const left,right;
+	size_t const hashval;
 public:
 	ParseTree(std::string identifier);//leaf
 	ParseTree(std::string identifier,
 			  std::unique_ptr<ParseTree> left_child,
 			  std::unique_ptr<ParseTree> right_child);//node
 	bool is_leaf() const;
-	ParseTree *get_left() const;
-	ParseTree *get_right() const;
+	ParseTree const * get_left() const;
+	ParseTree const * get_right() const;
 	size_t get_hash() const;
-	std::string get_id() const;
+	std::string const get_id() const;
 
-	bool operator==(ParseTree const &rhs) const;
+	bool operator==(ParseTree const & rhs) const;
 };
 
 /*

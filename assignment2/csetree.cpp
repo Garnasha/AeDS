@@ -1,25 +1,25 @@
 #include "csetree.h"
 
 
-CSETree CSETree::constructor_helper(ParseTree * const in_root,
-										   const size_t &node_count)
+CSETree CSETree::constructor_helper(ParseTree const * const in_root,
+									size_t const & node_count)
 {
 	unsigned int n = 0;
 	return CSETree(in_root,ParseTreeMap(node_count/2),n);
 }
 
-CSETree::CSETree(ParseTree * const in_root, const size_t &node_count):
+CSETree::CSETree(ParseTree const * const in_root, size_t const &node_count):
 	CSETree(CSETree::constructor_helper(in_root,node_count))
 {
 
 }
 
-CSETree::CSETree(ParseTree * const node, ParseTreeMap map, unsigned int &n)
+CSETree::CSETree(ParseTree const * const node, ParseTreeMap map, unsigned int &n)
 {
 
 	if(map.find(node) == map.end()){
 		++n;
-		map.insert(std::pair<ParseTree * const,unsigned int>(node,n));
+		map.insert(std::pair<ParseTree const * const,unsigned int>(node,n));
 		id = node->get_id();
 		if(!node->is_leaf()){
 			left = std::unique_ptr<CSETree>(
