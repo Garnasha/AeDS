@@ -21,7 +21,7 @@ struct phi<4>{
  * Important difference from the boost version: the boost version takes a
  * hash and a T foo to be hashed, this version takes two hashes.
  */
-size_t hash_combine(size_t const& lhs, size_t const& rhs){
+size_t hash_combine(size_t const lhs, size_t const rhs){
 	return lhs ^ (rhs + phi<sizeof(size_t)>::value + (lhs << 6) + (lhs >> 2));
 }
 
@@ -70,8 +70,14 @@ std::string const ParseTree::get_id() const
 
 bool ParseTree::operator==(ParseTree const &rhs) const
 {
-	return (id == rhs.id && (
-				(left == rhs.left) || //test for leaf and/or identical
-				(*left == *(rhs.left) && *right == *(rhs.right))));
+	return (id == rhs.id &&
+			(
+				(left == rhs.left) || //test for leaf and/or identity
+				(
+					(!is_leaf() && !rhs.is_leaf()) &&
+					(*left == *(rhs.left) && *right == *(rhs.right))
+				)
+			)
+			);
 }
 

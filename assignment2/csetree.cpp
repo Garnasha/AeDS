@@ -3,14 +3,14 @@
 
 
 CSETree CSETree::constructor_helper(ParseTree const * const in_root,
-									size_t const & node_count)
+									size_t const node_count)
 {
     unsigned int n = 0;
 	ParseTreeMap map(node_count);
 	return CSETree(in_root,map,n);
 }
 
-CSETree::CSETree(ParseTree const * const in_root, size_t const &node_count):
+CSETree::CSETree(ParseTree const * const in_root, size_t const node_count):
 	CSETree(CSETree::constructor_helper(in_root,node_count))
 {
 }
