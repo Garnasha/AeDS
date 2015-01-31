@@ -20,3 +20,8 @@ HEADERS += \
     csetree.h \
     parser.h \
     parsetreemap.h
+
+DISTFILES += \
+    big.in \
+    random.in \
+    samples.in
