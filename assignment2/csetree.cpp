@@ -5,10 +5,7 @@
 CSETree CSETree::constructor_helper(ParseTree const * const in_root,
 									size_t const & node_count)
 {
-	unsigned int n = 0;
-	std::cerr << "Entering the CSE construction helper." << std::endl;
-	std::cerr << "Creating cseTree from tree with head node "
-			  << in_root->get_id() << std::endl;
+    unsigned int n = 0;
 	return CSETree(in_root,ParseTreeMap(node_count/2),n);
 }
 
