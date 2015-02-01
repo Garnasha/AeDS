@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include "csetree.cpp"
-#include "parser.cpp"
+#include "csetree.h"
+#include "parser.h"
 
 
 using namespace std;
